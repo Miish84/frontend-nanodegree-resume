@@ -140,7 +140,7 @@ ul {
 }
 
 .biopic {
-  float: left;
+  float: right;
   padding: 10px;
   width: 200px;
   display: none;
