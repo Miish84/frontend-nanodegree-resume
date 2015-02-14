@@ -146,7 +146,7 @@ ul {
 }
 
 .biopic {
-  float: right;
+  float: left;
   padding: 10px;
   width: 200px;
   display: none;

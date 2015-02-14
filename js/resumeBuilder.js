@@ -1,117 +1,109 @@
 var bio = {
-	"name" : "Michael",
-	"role" : ".NET Developer",
+	"name" : "Michael Ishee",
+	"role" : "Developer",
 	"contacts" : {
-		"email" : "Miish84@gmail.com",
 		"mobile" : "865-321-7844",
+		"email" : "Miish84@gmail.com",		
 		"gitHub" : "Miish84",
+		"twitter" : "N/A",
 		"location" : "Knoxville, TN"
 	},
-	"welcomeMessage" : "Welcome to my interactive portfolio!",
+	"welcomeMessage" : "Welcome to my interactive resume!",
 	"skills" : ["HTML", "CSS", "Bootstrap", "JSON", "Javascript", "JQuery", "C#", "SQL Server", "SSIS", "Git"],
-	"education" : [
-		{
-			"School" : "Pellissippi State Community College",
-		    "Degree" : "Associate's - Database Concentration"
-		},
-		{
-			"School" : "Udacity",
-		    "Degree" : "Nanodegree - Front-End Web Developer"
-		}
-	]
-};
+	"biopic" : "images/me.jpg",
+	"display" : function() {
+		$("#header").prepend(HTMLheaderRole.replace("%data%", bio.role));
+		$("#header").prepend(HTMLheaderName.replace("%data%", bio.name));
+		$("#topContacts").append(HTMLmobile.replace("%data%", bio.contacts.mobile));
+		$("#topContacts").append(HTMLemail.replace("%data%", bio.contacts.email));
+		$("#topContacts").append(HTMLgithub.replace("%data%", bio.contacts.gitHub));
+		$("#topContacts").append(HTMLlocation.replace("%data%", bio.contacts.location));
+		$("#header").append(HTMLbioPic.replace("%data%", bio.biopic));
+		$("#header").append(HTMLwelcomeMsg.replace("%data%", bio.welcomeMessage));
+		$("#header").append(HTMLskillsStart);
 
-var work = { "jobs" : [
-	{
-		"title" : "Developer",
-		"employer" : "PerfectServe",
-		"startDate" : "2011-12",
-		"endDate" : "Indefinite",
-		"location" : "Knoxville, TN",
-		"description" : "Worked multiple development roles spanning throughout the entire stack in an AGILE environment."
-	}]
+		for(var s in bio.skills)
+		{
+			$("#skills").append(HTMLskills.replace("%data%", bio.skills[s]))
+		}
+	}
 };
 
 var education = {
-	"schools" : [
-	{
+	"schools" : 
+	[{
 		"name" : "Pellissippi",
 		"location" : "Knoxville, TN",
 		"degree" : "Associates of Science",
-		"major" : "Computer Science - Database Concentration"
-	},
-	{
-		"name" : "Udacity",
-		"location" : "San Fransisco, California",
-		"degree" : "NanoDegree",
-		"major" : "Front-End Web Developer"
-	}]
+		"majors" : ["Computer Science - Database Concentration"],
+		"dates" : 2012,
+		"url" : "http://www.pstcc.edu/"
+	}],
+	"onlineCourses" : 
+	[{
+		"title" : "Front-End Web Developer",
+		"school" : "Udacity",
+		"date" : 2015,
+		"url" : "http://www.udacity.com"
+	}],
+	"display" : function() {
+
+	}
+};
+
+var work = { 
+	"jobs" : 
+	[{
+		"employer" : "PerfectServe",		
+		"title" : "Developer",
+		"location" : "Knoxville, TN",		
+		"dates" : "2011 - present",
+		"description" : "Work multiple software development roles spanning throughout the entire stack in an AGILE environment."
+	}],
+	"display" : function() {
+		$("#workExperience").append(HTMLworkStart);
+
+		for(var j in work.jobs)
+		{
+			$(".work-entry:last").append(HTMLworkEmployer.replace("%data%", work.jobs[j].employer) + HTMLworkTitle.replace("%data%", work.jobs[j].title));
+			$(".work-entry:last").append(HTMLworkLocation.replace("%data%", work.jobs[j].location));
+			$(".work-entry:last").append(HTMLworkDates.replace("%data%", work.jobs[j].dates));
+			$(".work-entry:last").append(HTMLworkDescription.replace("%data%", work.jobs[j].description));
+		}
+	}
 };
 
 // Seems like I should have used camelcase for object properties and functions as I am here
 var projects = {
-	"project" : [
+	"projects" : [
 	{
 		"title" : "Interactive Resume",
-		"startDate" : "2015-01-15",
-		"endDate" : "Indefinite",
+		"dates" : "2015-01 - 2015-02",
 		"description" : "Interactive Resume to show off my credentials and front-end development skills",
 		"images" : ["images/197x148.gif"]
 	}],
 	"display" : function(index)
 	{
 		$("#projects").append(HTMLprojectStart);
-		$(".project-entry:last").append(HTMLprojectTitle.replace("%data%", projects.project[index].title));
-		$(".project-entry:last").append(HTMLprojectDates.replace("%data%", projects.project[index].startDate + " - " + projects.project[index].endDate));
-		$(".project-entry:last").append(HTMLprojectDescription.replace("%data%", projects.project[index].description));
+		$(".project-entry:last").append(HTMLprojectTitle.replace("%data%", projects.projects[index].title));
+		$(".project-entry:last").append(HTMLprojectDates.replace("%data%", projects.projects[index].dates));
+		$(".project-entry:last").append(HTMLprojectDescription.replace("%data%", projects.projects[index].description));
 		//
-		for (var image in projects.project[index].images)
+		for (var image in projects.projects[index].images)
 		{
-			$(".project-entry:last").append(HTMLprojectImage.replace("%data%", projects.project[index].images[image]));
+			$(".project-entry:last").append(HTMLprojectImage.replace("%data%", projects.projects[index].images[image]));
 		}
 	}
 };
 
-var authorName = "Michael Ishee";
-var authorRole = "Developer";
+bio.display();
 
-$("#header").prepend(HTMLheaderRole.replace("%data%", authorRole));
-$("#header").prepend(HTMLheaderName.replace("%data%", authorName));
-
-if (bio.skills && bio.skills.length >= 1)
-{
-	$("#header").append(HTMLskillsStart);
-
-	for (s in bio.skills)
-	{
-		$("#skills").append(HTMLskills.replace("%data%", bio.skills[s]));
-	}
-}
-
-
-if (work.jobs.length >= 1)
-{
-	for (job in work.jobs)
-	{
-		displayWork();
-	}
-}
-
-
-function displayWork()
-{
-	$("#workExperience").append(HTMLworkStart);
-	/* The :last jQuery selector returns the final element in a list that matches whatever precedes it.*/
-	$(".work-entry:last").append(HTMLworkEmployer.replace("%data%", work.jobs[job].employer) + HTMLworkTitle.replace("%data%", work.jobs[job].title));
-	$(".work-entry:last").append(HTMLworkLocation.replace("%data%", work.jobs[job].location));
-	$(".work-entry:last").append(HTMLworkDates.replace("%data%", work.jobs[job].startDate + " - " + work.jobs[job].endDate ));
-	$(".work-entry:last").append(HTMLworkDescription.replace("%data%", work.jobs[job].description));
-}
-
-for (var p in projects.project)
+for (var p in projects.projects)
 {
 	projects.display(p);
 }
+
+work.display();
 
 // log mouse location when click
 $(document).click(function(loc)
