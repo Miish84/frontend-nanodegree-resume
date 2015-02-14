@@ -1,15 +1,15 @@
 var bio = {
-	"Name" : "Michael",
-	"Role" : ".NET Developer",
-	"Contacts" : {
-		"Email" : "Miish84@gmail.com",
-		"Mobile" : "865-321-7844",
-		"GitHub" : "Miish84",
-		"Location" : "Knoxville, TN"
+	"name" : "Michael",
+	"role" : ".NET Developer",
+	"contacts" : {
+		"email" : "Miish84@gmail.com",
+		"mobile" : "865-321-7844",
+		"gitHub" : "Miish84",
+		"location" : "Knoxville, TN"
 	},
-	"WelcomeMessage" : "Welcome to my interactive portfolio!",
-	"Skills" : ["HTML", "CSS", "Bootstrap", "JSON", "Javascript", "JQuery", "C#", "SQL Server", "SSIS", "Git"],
-	"Education" : [
+	"welcomeMessage" : "Welcome to my interactive portfolio!",
+	"skills" : ["HTML", "CSS", "Bootstrap", "JSON", "Javascript", "JQuery", "C#", "SQL Server", "SSIS", "Git"],
+	"education" : [
 		{
 			"School" : "Pellissippi State Community College",
 		    "Degree" : "Associate's - Database Concentration"
@@ -23,59 +23,112 @@ var bio = {
 
 var work = { "jobs" : [
 	{
-		"Title" : "Developer",
-		"Employer" : "PerfectServe",
-		"StartDate" : "2011-12",
-		"EndDate" : "",
-		"Location" : "Knoxville, TN"
+		"title" : "Developer",
+		"employer" : "PerfectServe",
+		"startDate" : "2011-12",
+		"endDate" : "Indefinite",
+		"location" : "Knoxville, TN",
+		"description" : "Worked multiple development roles spanning throughout the entire stack in an AGILE environment."
 	}]
 };
 
 var education = {
-	"Schools" : [
+	"schools" : [
 	{
-		"Name" : "Pellissippi",
-		"Location" : "Knoxville, TN",
-		"Degree" : "Associates of Science",
-		"Major" : "Computer Science - Database Concentration"
+		"name" : "Pellissippi",
+		"location" : "Knoxville, TN",
+		"degree" : "Associates of Science",
+		"major" : "Computer Science - Database Concentration"
 	},
 	{
-		"Name" : "Udacity",
-		"City" : "Unknown",
-		"Degree" : "NanoDegree",
-		"Major" : "Front-End Web Developer"
+		"name" : "Udacity",
+		"location" : "San Fransisco, California",
+		"degree" : "NanoDegree",
+		"major" : "Front-End Web Developer"
 	}]
 };
 
-var projects = [
+// Seems like I should have used camelcase for object properties and functions as I am here
+var projects = {
+	"project" : [
+	{
+		"title" : "Interactive Resume",
+		"startDate" : "2015-01-15",
+		"endDate" : "Indefinite",
+		"description" : "Interactive Resume to show off my credentials and front-end development skills",
+		"images" : ["images/197x148.gif"]
+	}],
+	"display" : function(index)
+	{
+		$("#projects").append(HTMLprojectStart);
+		$(".project-entry:last").append(HTMLprojectTitle.replace("%data%", projects.project[index].title));
+		$(".project-entry:last").append(HTMLprojectDates.replace("%data%", projects.project[index].startDate + " - " + projects.project[index].endDate));
+		$(".project-entry:last").append(HTMLprojectDescription.replace("%data%", projects.project[index].description));
+		//
+		for (var image in projects.project[index].images)
+		{
+			$(".project-entry:last").append(HTMLprojectImage.replace("%data%", projects.project[index].images[image]));
+		}
+	}
+};
+
+var authorName = "Michael Ishee";
+var authorRole = "Developer";
+
+$("#header").prepend(HTMLheaderRole.replace("%data%", authorRole));
+$("#header").prepend(HTMLheaderName.replace("%data%", authorName));
+
+if (bio.skills && bio.skills.length >= 1)
 {
-	"Title" : "Interactive Resume",
-	"StartDate" : "2015-01-15",
-	"EndDate" : "",
-	"Description" : "Interactive Resume to show off my credentials and front-end development skills",
-	"Images" : ["images/me.jpg"]
+	$("#header").append(HTMLskillsStart);
+
+	for (s in bio.skills)
+	{
+		$("#skills").append(HTMLskills.replace("%data%", bio.skills[s]));
+	}
 }
-];
 
-/*HTMLheaderName.replace("%data%","Michael"),
-HTMLheaderRole.replace("%data%","Developer"),
-HTMLwelcomeMsg.replace("%data%", "Welcome to my interactive portfolio!"),
-HTMLskills.replace("%data%", ["HTML", "CSS", "Bootstrap", "Javascript", "C#", "SQL Server", "SSIS", "Git"])
-$("#workExperience").append(HTMLworkStart);
-$("#workExperience").append(HTMLworkEmployer.replace("%data%", bio.Work.Employer));
-$("#workExperience").append(HTMLworkTitle.replace("%data%", bio.Work.Position));
 
-$("#education").append(HTMLschoolStart);
-$("#education").append(HTMLschoolName.replace("%data%", bio.Education[0].School));
-$("#education").append(HTMLschoolDegree.replace("%data%", bio.Education[0].Degree));
-$("#education").append(HTMLschoolName.replace("%data%", bio.Education[1].School));
-$("#education").append(HTMLschoolDegree.replace("%data%", bio.Education[1].Degree));
+if (work.jobs.length >= 1)
+{
+	for (job in work.jobs)
+	{
+		displayWork();
+	}
+}
 
-$("#header").prepend(bio.Role);
-$("#header").prepend(bio.Name);
-$("#header").append(bio.Welcome);
-$("#topContacts").append(bio.Mobile);
-$("#topContacts").append(bio.Email);
-$("#footerContacts").append(bio.Mobile);
-$("#footerContacts").append(bio.Email);
-$("#header").prepend(bio.Skills);*/
+
+function displayWork()
+{
+	$("#workExperience").append(HTMLworkStart);
+	/* The :last jQuery selector returns the final element in a list that matches whatever precedes it.*/
+	$(".work-entry:last").append(HTMLworkEmployer.replace("%data%", work.jobs[job].employer) + HTMLworkTitle.replace("%data%", work.jobs[job].title));
+	$(".work-entry:last").append(HTMLworkLocation.replace("%data%", work.jobs[job].location));
+	$(".work-entry:last").append(HTMLworkDates.replace("%data%", work.jobs[job].startDate + " - " + work.jobs[job].endDate ));
+	$(".work-entry:last").append(HTMLworkDescription.replace("%data%", work.jobs[job].description));
+}
+
+for (var p in projects.project)
+{
+	projects.display(p);
+}
+
+// log mouse location when click
+$(document).click(function(loc)
+{
+	logClicks(loc.pageX, loc.pageY);
+});
+
+// Internationalize name e.g. Michael ISHEE
+$("#main").append(internationalizeButton);
+
+function inName(name)
+{
+	var firstAndLast = name.trim().split(" ");
+	firstAndLast[0] = firstAndLast[0][0].toUpperCase() + firstAndLast[0].slice(1).toLowerCase();
+	firstAndLast[1] = firstAndLast[1].toUpperCase();
+
+	return firstAndLast.join(" ");
+}
+
+$("#mapDiv").append(googleMap);
