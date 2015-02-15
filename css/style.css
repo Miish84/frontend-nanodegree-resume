@@ -220,7 +220,6 @@ span {
   }
 }
 
-#workExperience {
-  min-height: 200px;
+.online-header {
+  padding: 10px 0 10px 0;
 }
-
